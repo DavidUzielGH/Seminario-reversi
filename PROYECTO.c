@@ -9,7 +9,7 @@
 #define TURNO_O 0
 #define TURNO_X 1
 
-void dibujarTablero(char tablero[8][8], int cursor[2]){
+void dibujarTablero(char tablero[8][8], int cursor[2]){ //aqui se dibuja el tablero gg
   for (int i = 0; i < 10; ++i) {
     for (int j = 0; j < 10; ++j) {
       if (i == 0 && j == 0){
@@ -46,13 +46,13 @@ int main(){
   int cursor[2] = {0, 0};
   char opc; 
   int turno = TURNO_O;
-  for (int i = 0; i < 9; ++i) {
+  for (int i = 0; i < 9; ++i) { // se llena el tablero de espacios en blanco
     for (int j = 0; j < 9; ++j) {
       tablero[i][j] = ' ';
     }
   }
   char especial;
-  tablero[3][3] = 'X';
+  tablero[3][3] = 'X'; //Se pone en el tablero las piezas iniciales
   tablero[4][4] = 'X';
   tablero[3][4] = 'O';
   tablero[4][3] = 'O';
@@ -66,7 +66,7 @@ int main(){
     dibujarTablero(tablero, cursor);
     printf("mover:wasd, seleccionar:e, salir:q\n");
     scanf(" %c", &opc);
-    switch(opc){
+    switch(opc){ //Este switch controla el movimiento del cursor
       case 's':
 	if (cursor[0] < 7) {
 	  cursor[0]++;
