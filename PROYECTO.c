@@ -14,8 +14,6 @@
 struct Tablero{
   int turno;
   char tabla[8][8];
-  char fichasO[64][2];
-  char fichasX[64][2];
   int cursor[2];
 }tablero; 
 
@@ -91,12 +89,12 @@ int busquedaY(struct Tablero tablero, int direccion){
     ENEMIGO = 'O';
   }
   for (int i = tablero.cursor[1]+direccion;i <= 8 && i >= -1; i+=direccion) {
+    if (i == 8 || i == -1) {
+      movimientoY = 0;
+      break;
+    }
     if (tablero.tabla[tablero.cursor[0]][i] == ENEMIGO){
       movimientoY++;
-      if (i == 8 || i == -1) {
-	movimientoY = 0;
-	break;
-      }
     } else {
       if (tablero.tabla[tablero.cursor[0]][i] == YO) {
 	break;
@@ -111,6 +109,46 @@ int busquedaY(struct Tablero tablero, int direccion){
   }
   return movimientoY;
 }
+
+int buscarDiagonal(struct Tablero tablero, int direccionX, int direccionY){
+  int movimientoXY = 0;
+  int cursorX = tablero.cursor[0];
+  int cursorY = tablero.cursor[1];
+  char YO, ENEMIGO; //FICHAS DEL ENEMIGO Y PROPIAS, RESPECTIVAMENTE
+  if (tablero.turno == TURNO_O){
+    YO = 'O';
+    ENEMIGO = 'X';
+  }
+  if (tablero.turno == TURNO_X){
+    YO = 'X';
+    ENEMIGO = 'O';
+  }
+  int i = cursorX+direccionX;
+  int j = cursorY+direccionY;
+  while((i<=8 && i >= -1)&&(j<=8 && j>=-1)){
+    if (i == 8 || j == -1){
+      movimientoXY = 0;
+      break;
+    }
+    if (tablero.tabla[i][j] == ENEMIGO){
+      movimientoXY++;
+    } else {
+      if (tablero.tabla[i][j] == YO) {
+	break;
+      } else if(tablero.tabla[i][j] == ' '){
+	movimientoXY = 0;
+	break;
+      } else{
+	movimientoXY = 0;
+	break;
+      }
+    }
+    i+=direccionX;
+    j+=direccionY;
+  }
+  return movimientoXY;
+}
+
 int toggleTurno(int turnoActual){
   if (turnoActual == TURNO_O) return TURNO_X;
   else return TURNO_O;
@@ -123,6 +161,7 @@ struct Tablero buscarReemplazar(struct Tablero tablero){
   if (tablero.turno == TURNO_O) YO = 'O';
   if (tablero.turno == TURNO_X) YO = 'X';
 
+  int i = 0, j = 0;
   int flagMovimientoValido = false;
   int cursorX = tablero.cursor[0];
   int cursorY = tablero.cursor[1]; 
@@ -130,6 +169,10 @@ struct Tablero buscarReemplazar(struct Tablero tablero){
   int decrementoX = busquedaX(tablero, ATRAS);
   int incrementoY = busquedaY(tablero, ADELANTE);
   int decrementoY = busquedaY(tablero, ATRAS);
+  int diagonalPP = buscarDiagonal(tablero, ADELANTE, ADELANTE);
+  int diagonalPN = buscarDiagonal(tablero, ADELANTE, ATRAS);
+  int diagonalNP = buscarDiagonal(tablero, ATRAS, ADELANTE);
+  int diagonalNN = buscarDiagonal(tablero, ATRAS, ATRAS);
   if (incrementoX > 0) {
     for (int i = cursorX; i <= cursorX+incrementoX; ++i) {
       tablero.tabla[i][cursorY] = YO;
@@ -151,6 +194,46 @@ struct Tablero buscarReemplazar(struct Tablero tablero){
   if (decrementoY > 0) {
     for (int i = cursorY; i >= cursorY-decrementoY; --i) {
       tablero.tabla[cursorX][i] = YO;
+    }
+    flagMovimientoValido = true;
+  }
+  if (diagonalPP > 0) {
+    i = cursorX;
+    j = cursorY;
+    while ((i<=cursorX+diagonalPP)&&(j<=cursorY+diagonalPP)){
+      tablero.tabla[i][j] = YO;
+      i++;
+      j++;
+    }
+    flagMovimientoValido = true;
+  }
+  if (diagonalNP > 0) {
+    i = cursorX;
+    j = cursorY;
+    while ((i>=cursorX-diagonalNP)&&(j<=cursorY+diagonalNP)){
+      tablero.tabla[i][j] = YO;
+      i--;
+      j++;
+    }
+    flagMovimientoValido = true;
+  }
+  if (diagonalPN > 0) {
+    i = cursorX;
+    j = cursorY;
+    while ((i<=cursorX+diagonalPN)&&(j>=cursorY-diagonalPN)){
+      tablero.tabla[i][j] = YO;
+      i++;
+      j--;
+    }
+    flagMovimientoValido = true;
+  }
+  if (diagonalNN > 0) {
+    i = cursorX;
+    j = cursorY;
+    while ((i>=cursorX-diagonalNN)&&(j>=cursorY-diagonalNN)){
+      tablero.tabla[i][j] = YO;
+      i--;
+      j--;
     }
     flagMovimientoValido = true;
   }
