@@ -248,7 +248,35 @@ struct Tablero realizarJugada(struct Tablero tablero){
   return tablero;
 }
 
-int main(){
+void end(struct Tablero tablero) {
+  int fichaO = 0;
+  int fichaX = 0;
+  for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+      if(tablero.tabla[i][j] == 'O'){
+	fichaO++;
+      }
+      if (tablero.tabla[i][j] == 'X') {
+        fichaX++;
+      }
+    }
+  }
+  system("cls");
+  if (fichaO > fichaX) {
+    printf("FELICIDADES \'O\' GANASTE\n");
+  }
+  if (fichaX > fichaO) {
+    printf("FELICIDADES \'X\' GANASTE\n");
+  }
+  if (fichaX == fichaO) {
+    printf("EMPATARON\n");
+  }
+  printf("PRESIONA ENTER PARA CONTINUAR\n");
+  getchar();
+  getchar();
+}
+
+int juego(){
   setlocale(LC_ALL, "es_ES");
   int indiceO = 0;
   int fin = 0;
@@ -298,7 +326,63 @@ int main(){
 	break;
       case 'e':
 	tablero = realizarJugada(tablero);
+	break;
       case 'q':
+	printf("Esta seguro de que desea terminar? (s/n)\n");
+	scanf(" %c", &opc);
+	if (opc == 's' || opc == 'S') {
+	  opc = 'q';
+	  end(tablero);
+	  break;
+	} else {
+	  opc = ' ';
+	  break;
+	}
+	break;
+      default:break;
+    }
+  }
+  return 0;
+}
+
+void instrucciones() {
+  system("cls");
+  printf("El juego se controla utilizando un cursor en forma de #\n");
+  printf("cada jugador tiene fichas (O o X)\n");
+  printf("el objetivo del juego es convertir las fichas de tu oponente en tus fichas\n");
+  printf("para convertir fichas enemigas, debes de posicionar con el cursor una nueva ficha\n");
+  printf("adyacente a una ficha enemiga\n");
+  printf("que componga una linea (horizontal, vertical o diagonal) que atraviese fichas");
+  printf("enemigas, empezando con la nueva ficha\n");
+  printf("y finalizando con una ficha tuya existente, despues, se pasara el turno al otro jugador\n");
+  printf("TURNO O          TURNO X \n");
+  printf("1.      2.       3.       4.  \n");
+  printf("                 #        X   \n");
+  printf("#XO     OOO      OOO      OXO \n");
+  printf(" OX      OX       OX       OX \n");
+  printf("                              \n");
+  printf("El turno solo se pasa si realizas una jugada valida\n");
+  getchar();
+  getchar();
+}
+
+int main(){
+  int opc = 0;
+  while(opc != 3){
+    system("cls");
+    printf("MENU\n");
+    printf("1. Jugar\n");
+    printf("2. Como Jugar?\n");
+    printf("3. Salir\n");
+    scanf("%i", &opc);
+    switch(opc){
+      case 1:
+	juego();
+	break;
+      case 2:
+	instrucciones();
+	break;
+      case 3:
 	break;
       default:break;
     }
