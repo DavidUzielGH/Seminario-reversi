@@ -1,6 +1,7 @@
-/* NOMBRE:DAVID UZIEL GUEVARA HERNANDEZ
+/* NOMBRE:DAVID UZIEL GUEVARA HERNÁNDEZ
+ * NOMBRE: ROBERTO OMAR PÉREZ PÉREZ
  * FECHA:05-04-2020
- * PROYECTO
+ * PROYECTO, REVERSI
  */
 
 #include <stdio.h>
@@ -351,8 +352,8 @@ void instrucciones() {
   printf("cada jugador tiene fichas (O o X)\n");
   printf("el objetivo del juego es convertir las fichas de tu oponente en tus fichas\n");
   printf("para convertir fichas enemigas, debes de posicionar con el cursor una nueva ficha\n");
-  printf("adyacente a una ficha enemiga\n");
-  printf("que componga una linea (horizontal, vertical o diagonal) que atraviese fichas");
+  printf("adyacente a una ficha enemiga");
+  printf("que componga una \nlinea (horizontal, vertical o diagonal) que atraviese fichas ");
   printf("enemigas, empezando con la nueva ficha\n");
   printf("y finalizando con una ficha tuya existente, despues, se pasara el turno al otro jugador\n");
   printf("TURNO O          TURNO X \n");
@@ -362,6 +363,7 @@ void instrucciones() {
   printf(" OX      OX       OX       OX \n");
   printf("                              \n");
   printf("El turno solo se pasa si realizas una jugada valida\n");
+  printf("Presiona enter para regresar...\n");
   getchar();
   getchar();
 }
