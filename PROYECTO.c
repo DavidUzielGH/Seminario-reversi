@@ -27,8 +27,7 @@ void dibujarTablero(char tablero[8][8], int cursor[2]){ //aqui se dibuja el tabl
 	if ((i != 0 && j == 0) || (i != 0 && j == 9)){
 	  printf("║");
 	}
-      }
-      if (i == 9 && j == 9) {
+      } if (i == 9 && j == 9) {
         printf("╚════════╝");
       }
       if(i > 0 && j > 0 && i < 9 && j < 9){
@@ -56,10 +55,10 @@ int busquedaX(struct Tablero tablero, int direccion){
     ENEMIGO = 'O';
   }
   for (int i = tablero.cursor[0]+direccion; i <= 8 && i >= -1; i+=direccion) {
-      if (i == 8 || i == -1) {
-	movimientoX = 0;
-	break;
-      }
+    if (i == 8 || i == -1) {
+      movimientoX = 0;
+      break;
+    }
     if (tablero.tabla[i][tablero.cursor[1]] == ENEMIGO){
       movimientoX++;
     } else{
@@ -274,7 +273,7 @@ int main(){
       printf("TURNO DE X\n");
     }
     dibujarTablero(tablero.tabla, tablero.cursor);
-    printf("mover:wasd, seleccionar:e, salir:q\n");
+    printf("mover:w(arriba),a(izquierda),s(abajo),d(derecha), seleccionar:e, salir:q\n");
     scanf(" %c", &opc);
     switch(opc){ //Este switch controla el movimiento del cursor
       case 'a':
