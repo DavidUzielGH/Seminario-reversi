@@ -35,7 +35,7 @@ void dibujarTablero(char tablero[8][8], int cursor[2]){ //aqui se dibuja el tabl
 	if (j-1 == cursor[0] && i-1 == cursor[1]) {
 	  printf("#");
 	} else {
-	printf("%c", tablero[j-1][i-1]);
+	  printf("%c", tablero[j-1][i-1]);
 	}
       }
     }
@@ -255,18 +255,17 @@ int main(){
   int fin = 0;
   char opc; 
   tablero.turno = TURNO_O;
-  tablero.cursor[0] = 0;
-  tablero.cursor[1] = 0;
   for (int i = 0; i < 9; ++i) { // se llena el tablero de espacios en blanco
     for (int j = 0; j < 9; ++j) {
       tablero.tabla[i][j] = ' ';
     }
   }
-  char especial;
   tablero.tabla[3][3] = 'X'; //Se pone en el tablero las piezas iniciales
   tablero.tabla[4][4] = 'X';
   tablero.tabla[3][4] = 'O';
   tablero.tabla[4][3] = 'O';
+  tablero.cursor[0] = 0;
+  tablero.cursor[1] = 0;
   while (opc != 'q') {
     system("cls");
     if (tablero.turno == TURNO_O) { // Aqui solo se imprime de quien es el turno
@@ -275,7 +274,7 @@ int main(){
       printf("TURNO DE X\n");
     }
     dibujarTablero(tablero.tabla, tablero.cursor);
-    printf("mover:w(arriba),a(izquierda),s(abajo),d(derecha), seleccionar:e, salir:q\n");
+    printf("mover:wasd, seleccionar:e, salir:q\n");
     scanf(" %c", &opc);
     switch(opc){ //Este switch controla el movimiento del cursor
       case 'a':
