@@ -192,7 +192,7 @@ int main(){
       printf("TURNO DE X\n");
     }
     dibujarTablero(tablero.tabla, tablero.cursor);
-    printf("mover:wasd, seleccionar:e, salir:q\n");
+    printf("mover:w(arriba),a(izquierda),s(abajo),d(derecha), seleccionar:e, salir:q\n");
     scanf(" %c", &opc);
     switch(opc){ //Este switch controla el movimiento del cursor
       case 'a':
